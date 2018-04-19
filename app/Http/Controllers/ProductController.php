@@ -7,18 +7,34 @@
 namespace App\Http\Controllers;
 
 
+use App\Repository\product\ProductInterface;
 use App\Utils\Keys\common\ApplicationKeys;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller {
 
+    private $product;
+
     /**
-     * Show the application products.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
+    public function __construct(ProductInterface $product) {
+        $this->middleware('auth');
+        $this->product = $product;
+    }
+
     public function productList() {
         return view('/admin/product/productlist');
+    }
+
+    public function findProductTypes() {
+        return response()->json($this->product->findProductType());
+    }
+
+    public function findProductsByType($productTypeId) {
+        return response()->json($this->product->findProductByProductType($productTypeId));
     }
 
     public function uploadImages(Request $request) {

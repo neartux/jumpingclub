@@ -11,6 +11,14 @@
             service.contextPath = contextPath;
         };
 
+        service.findProductTypes = function () {
+            return $http.get(service.contextPath+'/admin/product/findProductTypes');
+        };
+
+        service.findProductsByType = function (productTypeId) {
+            return $http.get(service.contextPath+'/admin/product/findProductsByType/'+productTypeId);
+        };
+
         service.findImagesByProduct = function () {
             console.info("UPDATING ............................");
         };

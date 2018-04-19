@@ -45,9 +45,9 @@
 
             <ul class="nav">
                 <li>
-                    <a href="dashboard.html">
-                        <i class="ti-panel"></i>
-                        <p>Dashboard</p>
+                    <a href="{{ route('admin_product_list') }}">
+                        <i class="ti-dropbox"></i>
+                        <p>Productos</p>
                     </a>
                 </li>
             </ul>

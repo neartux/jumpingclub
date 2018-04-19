@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Service\product\ProductService::class,
 
         /*
          * Application Service Providers...

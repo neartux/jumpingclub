@@ -7,7 +7,7 @@
         <div class="content" data-ng-show="ctrl.showProductList">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">
@@ -21,7 +21,19 @@
                             <div class="content mt-xl">
 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Tipo Producto</label>
+                                            <select class="form-control border-input" data-ng-model="ctrl.productTypeId"
+                                                    data-ng-change="ctrl.findProductsByType();">
+                                                <option value="0">Selecciona</option>
+                                                <option value="@{{ type.id }}" data-ng-repeat="type in ctrl.productTypeList">
+                                                    @{{ type.description }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="ctrl.productsList.length">
 
                                         <table class="table table-striped table-bordered">
                                             <thead>
@@ -34,6 +46,20 @@
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>
+                                            <tbody>
+                                                <tr data-ng-repeat="product in ctrl.productsList">
+                                                    <td>@{{ $index + 1 }}</td>
+                                                    <td>@{{ product.name }}</td>
+                                                    <td>@{{ product.description }}</td>
+                                                    <td>@{{ product.price | currency }}</td>
+                                                    <td>@{{ product.area }}</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-simple btn-info btn-icon like">
+                                                            <i class="ti-heart"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
                                         </table>
 
                                     </div>
@@ -51,7 +77,7 @@
         <div class="content" data-ng-show="!ctrl.showProductList">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">

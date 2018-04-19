@@ -26,6 +26,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
 
     Route::get('/product/list', 'ProductController@productList')->name('admin_product_list');
 
+    Route::get('/product/findProductTypes', 'ProductController@findProductTypes');
+
+    Route::get('/product/findProductsByType/{productTypeId}', 'ProductController@findProductsByType');
+
     Route::post('/product/uploadimages', 'ProductController@uploadImages')->name('admin_product_upload_image');
     
 });
