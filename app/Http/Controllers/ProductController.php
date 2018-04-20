@@ -37,16 +37,61 @@ class ProductController extends Controller {
         return response()->json($this->product->findProductByProductType($productTypeId));
     }
 
+    public function createProduct(Request $request) {
+        try {
+            $this->product->createProduct($request->all());
+            return response()->json(array("error" => false, "message" => "se ha creado el producto correctamente"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function updateProduct(Request $request) {
+        try {
+
+            $this->product->updateProduct($request->all());
+            return response()->json(array("error" => false, "message" => "se ha actualizado el producto correctamente"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function publicProduct(Request $request) {
+        try {
+
+            $this->product->publicProductById($request->input('productId'), $request->input('isPublic'));
+            return response()->json(array("error" => false, "message" => "Realizado correctamente"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function deleteProduct($id) {
+        try {
+            $this->product->deleteProduct($id);
+            return response()->json(array("error" => false, "message" => "Producto eliminado"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function findImagesByProduct($id) {
+        return response()->json($this->product->findImagesByProduct($id));
+    }
+
     public function uploadImages(Request $request) {
+        echo "HER";
         try {
             // Valida que exista una imagen
             if ($request->hasFile('file')) {
+                $productId = $request->input('productId');
                 $image = $request->file('file');
                 $extension = $image->getClientOriginalExtension();
-                $folio = "001"; // TODO find this value to DB
+                $folio = $this->product->findNextProductFolio();
                 $nameFile = explode(".", $image->getClientOriginalName())[0]."-".$folio.".".$extension;
-                $image->move(base_path() . ApplicationKeys::URL_SAVE_JUMPING_IMAGES, $nameFile);
-                $this->deleteImage();
+                $path = base_path() . ApplicationKeys::URL_SAVE_JUMPING_IMAGES . "/" . $productId;
+                $image->move($path, $nameFile);
+                //$this->deleteImage();
                 return response()->json("Se ha subido correctamente la imagen");
             }
             return response()->json("No hay imagen por subir");

@@ -6,11 +6,10 @@
 
     app.controller('AngularFileUploadController', ['$scope', 'FileUploader', 'ProductService', function($scope, FileUploader, ProductService) {
 
-        this.setIdApplication = function(id, nameApp){
-            // Reasigna el id id de la aplicacion
-            uploader.formData[0].idApplication = id;
-            // Coloca el nombre de la aplicacion actual
-            uploader.formData[0].nameApp = nameApp;
+        this.setProductId = function(id){
+            console.info("HER =========== ", id);
+            // Reasigna el id del producto al que pertenece la imagen
+            uploader.formData[0].productId = id;
         };
 
         var uploader = $scope.uploader = new FileUploader({
@@ -18,7 +17,7 @@
             removeAfterUpload: true,
             formData: [
                 {
-                    "idApplication": undefined,
+                    "productId": undefined,
                     "nameApp": ''
                 }
             ]

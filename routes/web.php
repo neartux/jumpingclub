@@ -30,6 +30,16 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
 
     Route::get('/product/findProductsByType/{productTypeId}', 'ProductController@findProductsByType');
 
+    Route::post('/product/createProduct', 'ProductController@createProduct');
+
+    Route::post('/product/updateProduct', 'ProductController@updateProduct');
+
+    Route::post('/product/publicProduct', 'ProductController@publicProduct');
+
+    Route::get('/product/deleteProduct/{id}', 'ProductController@deleteProduct');
+
+    Route::get('/product/findImagesByProduct/{id}', 'ProductController@findImagesByProduct');
+
     Route::post('/product/uploadimages', 'ProductController@uploadImages')->name('admin_product_upload_image');
     
 });

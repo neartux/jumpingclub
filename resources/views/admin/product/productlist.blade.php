@@ -12,7 +12,7 @@
                             <div class="header">
                                 <h4 class="title">
                                     Productos
-                                    <button class="btn btn-default btn-fill btn-wd" data-ng-click="ctrl.showProductForm();"
+                                    <button class="btn btn-default btn-fill btn-wd" data-ng-click="ctrl.showCreateProduct();"
                                             style="float: right;">
                                         <i class="ti-plus"></i> Nuevo
                                     </button>
@@ -54,8 +54,21 @@
                                                     <td>@{{ product.price | currency }}</td>
                                                     <td>@{{ product.area }}</td>
                                                     <td>
-                                                        <a href="#" class="btn btn-simple btn-info btn-icon like">
-                                                            <i class="ti-heart"></i>
+                                                        <a href="javascript:;" class="btn btn-simple btn-info btn-icon like"
+                                                           title="Editar" data-ng-click="ctrl.showEditProduct(product);">
+                                                            <i class="ti-pencil-alt"></i>
+                                                        </a>
+                                                        <a href="javascript:;" class="btn btn-simple btn-warning btn-icon like"
+                                                           data-ng-show="product.public == 0" data-ng-click="ctrl.publicProduct(product, true);">
+                                                            <i class="ti-world"></i>
+                                                        </a>
+                                                        <a href="javascript:;" class="btn btn-simple btn-success btn-icon like"
+                                                           data-ng-show="product.public == 1" data-ng-click="ctrl.publicProduct(product, false);">
+                                                            <i class="ti-world"></i>
+                                                        </a>
+                                                        <a href="javascript:;" class="btn btn-simple btn-danger btn-icon like"
+                                                           data-ng-click="ctrl.deleteProduct($index, product.id);">
+                                                            <i class="ti-trash"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -82,7 +95,8 @@
                             <div class="header">
                                 <h4 class="title">
                                     Informacion de producto
-                                    <button class="btn btn-info btn-fill btn-wd" style="float: right;">
+                                    <button class="btn btn-info btn-fill btn-wd" style="float: right;"
+                                            data-ng-click="ctrl.validateProduct();">
                                         <i class="ti-save"></i> Guardar</button>
                                     <button type="button" name="back" class="btn btn-default btn-fill btn-wd mr"
                                             data-ng-click="ctrl.goBackToProductList()" style="float: right;">
