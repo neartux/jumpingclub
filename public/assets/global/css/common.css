@@ -522,3 +522,6 @@
 .pt-xxl.n {
 	padding-top: -40px !important;
 }
+.bold {
+	font-weight: bold !important;
+}

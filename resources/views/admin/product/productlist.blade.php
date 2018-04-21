@@ -42,18 +42,24 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="!ctrl.productsList.length">
+                                        <div class="alert alert-warning">
+                                            <span><b> Info - </b> No se encontraron productos</span>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="ctrl.productsList.length">
                                         <!-- <table class="table table-striped table-bordered"> -->
                                         <table dt-column-defs="ctrl.dtColumnDefs" datatable="ng" dt-instance="ctrl.dtInstance"
                                                dt-options="ctrl.dtOptions" class="table table-bordered table-striped table-condensed">
                                             <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Nombre</th>
-                                                <th>Descripcion</th>
-                                                <th>Precio</th>
-                                                <th>Medidas</th>
-                                                <th>Acciones</th>
+                                                <th width="5%" class="bold">#</th>
+                                                <th width="25%" class="bold">Nombre</th>
+                                                <th class="bold">Descripcion</th>
+                                                <th width="8%" class="bold">Precio Compra</th>
+                                                <th width="8%" class="bold">Precio Renta</th>
+                                                <th width="15%" class="bold">Medidas</th>
+                                                <th width="20%" class="bold">Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -61,7 +67,8 @@
                                                     <td>@{{ $index + 1 }}</td>
                                                     <td>@{{ product.name }}</td>
                                                     <td>@{{ product.description }}</td>
-                                                    <td>@{{ product.price | currency }}</td>
+                                                    <td>@{{ product.purchase_price | currency }}</td>
+                                                    <td>@{{ product.sale_price | currency }}</td>
                                                     <td>@{{ product.area }}</td>
                                                     <td>
                                                         <a href="javascript:;" class="btn btn-simple btn-info btn-icon like"

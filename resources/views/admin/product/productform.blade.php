@@ -61,10 +61,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Dimensiones:
                                         <span class="required"> * </span>
@@ -77,15 +73,31 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Precio:
+                                    <label class="col-md-3 control-label">Precio Compra:
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control border-input numeric-field" name="price"
-                                               data-ng-model="ctrl.product.price" required>
-                                        <span ng-show="productForm.price.$invalid && !productForm.price.$pristine"
-                                              class="text-danger">El precio es requerido.</span>
+                                        <input type="text" class="form-control border-input numeric-field" name="purchase_price"
+                                               data-ng-model="ctrl.product.purchase_price" required>
+                                        <span ng-show="productForm.purchase_price.$invalid && !productForm.purchase_price.$pristine"
+                                              class="text-danger">El precio compra es requerido.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Precio Renta:
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control border-input numeric-field" name="sale_price"
+                                               data-ng-model="ctrl.product.sale_price" required>
+                                        <span ng-show="productForm.sale_price.$invalid && !productForm.sale_price.$pristine"
+                                              class="text-danger">El precio renta es requerido.</span>
                                     </div>
                                 </div>
 

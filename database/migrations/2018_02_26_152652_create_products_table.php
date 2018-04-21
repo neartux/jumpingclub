@@ -20,7 +20,9 @@ class CreateProductsTable extends Migration {
             $table->string('name', 100);
             $table->string('description', 255);
             $table->string('area', 255);
-            $table->double('price', 15, 8);
+            $table->decimal('purchase_price', 8, 2);
+            $table->decimal('sale_price', 8, 2);
+            $table->decimal('wholesale_price', 8, 2)->nullable();
             $table->double('stock', 15, 8);
             $table->boolean('public');
 

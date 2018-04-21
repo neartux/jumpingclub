@@ -56,7 +56,8 @@ class ProductRepository implements ProductInterface {
         $product->name = $productValues['name'];
         $product->description = $productValues['description'];
         $product->area = $productValues['area'];
-        $product->price = floatval($productValues['price']);
+        $product->purchase_price = floatval($productValues['purchase_price']);
+        $product->sale_price = floatval($productValues['sale_price']);
         $product->stock = floatval($productValues['stock']);
         $product->public = false;
         $product->save();
@@ -73,7 +74,8 @@ class ProductRepository implements ProductInterface {
         $product->name = $productValues['name'];
         $product->description = $productValues['description'];
         $product->area = $productValues['area'];
-        $product->price = floatval($productValues['price']);
+        $product->purchase_price = floatval($productValues['purchase_price']);
+        $product->sale_price = floatval($productValues['sale_price']);
         $product->stock = floatval($productValues['stock']);
         $product->save();
     }

@@ -21,7 +21,8 @@
             DTColumnDefBuilder.newColumnDef(2).notSortable(),
             DTColumnDefBuilder.newColumnDef(3).notSortable(),
             DTColumnDefBuilder.newColumnDef(4).notSortable(),
-            DTColumnDefBuilder.newColumnDef(5).notSortable()
+            DTColumnDefBuilder.newColumnDef(5).notSortable(),
+            DTColumnDefBuilder.newColumnDef(6).notSortable()
         ];
 
         /**
@@ -269,8 +270,6 @@
         };
 
         $scope.$watch('ctrl.valueReloadProduct', function(newVal, oldVal){
-            console.log('changed');
-            console.log('newVal = ', newVal, " oldVal = ", oldVal);
             if(newVal.data !== undefined && newVal.data){
                 ctrl.findImagesByProduct();
             }
