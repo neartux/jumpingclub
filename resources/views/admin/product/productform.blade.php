@@ -3,14 +3,15 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12">
 
-        <form class="form-horizontal form-row-seperated" action="#" name="productForm" novalidate>
+        <form class="form-horizontal form-row-seperated" name="productForm" novalidate>
 
             <div class="tabbable-bordered">
                 <ul class="nav nav-tabs">
-                    <li class="active initialTab">
+                    <li class="active initialTab" data-ng-click="ctrl.isTabImages = false;">
                         <a href="#tab_general" data-toggle="tab"> General </a>
                     </li>
-                    <li data-ng-click="ctrlFile.setProductId(ctrl.product.id);" class="secondTab">
+                    <li data-ng-click="ctrlFile.setProductId(ctrl.product.id);ctrl.isTabImages = true;"
+                        data-ng-show="!ctrl.isCreateProcess" class="secondTab">
                         <a href="#tab_images" data-toggle="tab"> Images </a>
                     </li>
                 </ul>
@@ -24,12 +25,15 @@
                                     <label class="col-md-3 control-label">Tipo Producto:
                                         <span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <select class="form-control border-input" data-ng-model="ctrl.product.product_type_id">
+                                        <select class="form-control border-input" data-ng-model="ctrl.product.product_type_id"
+                                                required name="productType">
                                             <option value="">Selecciona</option>
                                             <option value="@{{ type.id }}" data-ng-repeat="type in ctrl.productTypeList">
                                                 @{{ type.description }}
                                             </option>
                                         </select>
+                                        <span ng-show="productForm.productType.$invalid && !productForm.productType.$pristine"
+                                              class="text-danger">Selecciona un tipo de producto.</span>
                                     </div>
                                 </div>
 
@@ -50,7 +54,10 @@
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control border-input" name="description" data-ng-model="ctrl.product.description">
+                                        <input type="text" class="form-control border-input" name="description"
+                                               data-ng-model="ctrl.product.description" required>
+                                        <span ng-show="productForm.description.$invalid && !productForm.description.$pristine"
+                                              class="text-danger">La descripción es requerido.</span>
                                     </div>
                                 </div>
 
@@ -59,11 +66,14 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Area:
+                                    <label class="col-md-3 control-label">Dimensiones:
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control border-input" name="area" data-ng-model="ctrl.product.area">
+                                        <input type="text" class="form-control border-input" name="dimensions"
+                                               data-ng-model="ctrl.product.area" required>
+                                        <span ng-show="productForm.dimensions.$invalid && !productForm.dimensions.$pristine"
+                                              class="text-danger">La dimensión es requerido.</span>
                                     </div>
                                 </div>
 
@@ -72,7 +82,10 @@
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control border-input" name="price" data-ng-model="ctrl.product.price">
+                                        <input type="text" class="form-control border-input numeric-field" name="price"
+                                               data-ng-model="ctrl.product.price" required>
+                                        <span ng-show="productForm.price.$invalid && !productForm.price.$pristine"
+                                              class="text-danger">El precio es requerido.</span>
                                     </div>
                                 </div>
 
@@ -81,9 +94,19 @@
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control border-input" name="tock" data-ng-model="ctrl.product.stock">
+                                        <input type="text" class="form-control border-input numeric-field" name="stock"
+                                               data-ng-model="ctrl.product.stock" required>
+                                        <span ng-show="productForm.stock.$invalid && !productForm.stock.$pristine"
+                                              class="text-danger">El stock es requerido.</span>
                                     </div>
                                 </div>
+
+                                <a href="javascript:;" class="btn btn-info btn-fill btn-wd" style="float: right;"
+                                        data-ng-show="!ctrl.isTabImages"
+                                        data-ng-click="ctrl.validateProduct(productForm.$valid);"
+                                        data-ng-disabled="productForm.$invalid">
+                                    <i class="ti-save"></i> Guardar
+                                </a>
 
                             </div>
 
@@ -107,9 +130,7 @@
                             <div class="form-group">
                                 <div class="col-sm-8">
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
-                                        <input type="file" nv-file-select="" uploader="uploader" multiple  />
-                                        <span class="fileinput-filename"></span>
-                                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
+                                        <input type="file" nv-file-select="" uploader="uploader" multiple/>
                                     </div>
                                 </div>
                             </div>
@@ -194,10 +215,10 @@
                             <thead>
                             <tr role="row" class="heading">
                                 <th width="8%"> Imagen </th>
-                                <th width="25%"> Nombre </th>
+                                <th width="20%"> Nombre </th>
                                 <th width="8%"> Orden </th>
-                                <th width="10%"> Principal </th>
-                                <th width="10%"> Acciones </th>
+                                <th width="5%"> Principal </th>
+                                <th width="20%"> Acciones </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -209,7 +230,13 @@
                                     @{{ image.name }}
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control border-input" data-ng-model="ctrl.listProductImages[$index].order" value="@{{ image.order }}">
+                                    <span data-ng-show="!image.editOrder">
+                                        @{{ image.order }}
+                                    </span>
+                                    <span data-ng-show="image.editOrder">
+                                        <input type="text" class="form-control border-input numeric-field"
+                                               data-ng-model="ctrl.listProductImages[$index].orderN" value="@{{ image.orderN }}">
+                                    </span>
                                 </td>
                                 <td>
                                     <label>
@@ -218,8 +245,19 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <a href="javascript:;" class="btn btn-default btn-sm btn-fill" data-ng-click="ctrl.deleteImage($index);">
-                                        <i class="ti-trash"></i> Remove </a>
+                                    <a href="javascript:;" class="btn btn-success btn-sm btn-fill"
+                                       data-ng-show="!image.editOrder && !ctrl.blockEditAllImages" data-ng-disabled=""
+                                       data-ng-click="image.editOrder = true;ctrl.blockEditAllImages = true;image.orderN = image.order;">
+                                        <i class="ti-pencil-alt"></i> Editar
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-success btn-sm btn-fill"
+                                       data-ng-show="image.editOrder"
+                                       data-ng-click="ctrl.saveOrderImage(image);">
+                                        <i class="ti-save-alt"></i> Save
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-danger btn-sm btn-fill" data-ng-click="ctrl.deleteImage($index);">
+                                        <i class="ti-trash"></i> Eliminar
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

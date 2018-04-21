@@ -5,7 +5,6 @@
         var service = {};
 
         service.contextPath = '';
-        service.listProductImages = [];
         service.valueReloadProduct = {
             data: undefined
         };
@@ -71,6 +70,10 @@
 
         service.deleteImage = function (imageId) {
             return $http.get(service.contextPath+'/admin/product/deleteImage/'+imageId);
+        };
+
+        service.changeOrderImage = function (imageId, order) {
+            return $http.get(service.contextPath+'/admin/product/changeOrderImage/'+imageId+'/'+order);
         };
 
         return service;

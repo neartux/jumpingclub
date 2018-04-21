@@ -45,5 +45,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
     Route::get('/product/deleteImage/{imageId}', 'ProductController@deleteImage');
 
     Route::post('/product/uploadimages', 'ProductController@uploadImages')->name('admin_product_upload_image');
+
+    Route::get('/product/changeOrderImage/{imageId}/{order}', 'ProductController@changeOrderImage');
     
 });

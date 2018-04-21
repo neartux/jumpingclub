@@ -134,6 +134,8 @@
 
 <script src="{{ asset('assets/global/js/common.js') }}"></script>
 
+<script src="{{ asset('assets/global/js/jquery.alphanum.js') }}"></script>
+
 @section('script-section')
 
 @show

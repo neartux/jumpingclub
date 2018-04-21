@@ -33,7 +33,7 @@ class ProductRepository implements ProductInterface {
     }
 
     public function findProductByProductType($productType) {
-        return DB::select('SELECT * FROM product WHERE product.product_type_id = '.$productType.' AND product.status_id = '.StatusKeys::STATUS_ACTIVE);
+        return DB::select('SELECT * FROM product WHERE product.product_type_id = '.$productType.' AND product.status_id = '.StatusKeys::STATUS_ACTIVE. ' ORDER BY product.id');
     }
 
     public function findImagesByProduct($productId) {
@@ -60,6 +60,8 @@ class ProductRepository implements ProductInterface {
         $product->stock = floatval($productValues['stock']);
         $product->public = false;
         $product->save();
+
+        return $product->id;
     }
 
     public function updateProduct($productValues) {
@@ -132,6 +134,16 @@ class ProductRepository implements ProductInterface {
             throw new \Exception("No se encontro la imagen");
         }
         $image->status_id = StatusKeys::STATUS_INACTIVE;
+
+        $image->save();
+    }
+
+    public function changeOrderImage($imageId, $order) {
+        $image = $this->findProductImageById($imageId);
+        if(! $image){
+            throw new \Exception("No se encontro la imagen");
+        }
+        $image->order = $order;
 
         $image->save();
     }

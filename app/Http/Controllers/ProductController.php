@@ -39,8 +39,8 @@ class ProductController extends Controller {
 
     public function createProduct(Request $request) {
         try {
-            $this->product->createProduct($request->all());
-            return response()->json(array("error" => false, "message" => "se ha creado el producto correctamente"));
+            $id = $this->product->createProduct($request->all());
+            return response()->json(array("error" => false, "message" => "se ha creado el producto correctamente", "id" => $id));
         } catch (\Exception $e) {
             return response()->json(array("error" => true, "message" => $e->getMessage()));
         }
@@ -117,6 +117,15 @@ class ProductController extends Controller {
         try {
             $this->product->setPrincipalImageByProduct($imageId, $productId);
             return response()->json(array("error" => false, "message" => "Imagen actualizado"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function changeOrderImage($imageId, $order) {
+        try {
+            $this->product->changeOrderImage($imageId, $order);
+            return response()->json(array("error" => false, "message" => "Orden de imagenes actualizado"));
         } catch (\Exception $e) {
             return response()->json(array("error" => true, "message" => $e->getMessage()));
         }

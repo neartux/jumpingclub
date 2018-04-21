@@ -32,4 +32,6 @@ interface ProductInterface {
     public function setPrincipalImageByProduct($productImageId, $productId);
 
     public function deleteProductImage($imageId);
+
+    public function changeOrderImage($imageId, $order);
 }

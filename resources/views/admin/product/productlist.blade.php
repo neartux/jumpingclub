@@ -55,18 +55,21 @@
                                                     <td>@{{ product.area }}</td>
                                                     <td>
                                                         <a href="javascript:;" class="btn btn-simple btn-info btn-icon like"
-                                                           title="Editar" data-ng-click="ctrl.showEditProduct(product);">
+                                                           title="Editar @{{ product.name }}" data-ng-click="ctrl.showEditProduct(product);">
                                                             <i class="ti-pencil-alt"></i>
                                                         </a>
                                                         <a href="javascript:;" class="btn btn-simple btn-warning btn-icon like"
+                                                           title="Publicar @{{ product.name }}"
                                                            data-ng-show="product.public == 0" data-ng-click="ctrl.publicProduct(product, true);">
                                                             <i class="ti-world"></i>
                                                         </a>
                                                         <a href="javascript:;" class="btn btn-simple btn-success btn-icon like"
+                                                           title="Despublicar @{{ product.name }}"
                                                            data-ng-show="product.public == 1" data-ng-click="ctrl.publicProduct(product, false);">
                                                             <i class="ti-world"></i>
                                                         </a>
                                                         <a href="javascript:;" class="btn btn-simple btn-danger btn-icon like"
+                                                           title="Eliminar @{{ product.name }}"
                                                            data-ng-click="ctrl.deleteProduct($index, product.id);">
                                                             <i class="ti-trash"></i>
                                                         </a>
@@ -95,9 +98,6 @@
                             <div class="header">
                                 <h4 class="title">
                                     Informacion de producto
-                                    <button class="btn btn-info btn-fill btn-wd" style="float: right;"
-                                            data-ng-click="ctrl.validateProduct();">
-                                        <i class="ti-save"></i> Guardar</button>
                                     <button type="button" name="back" class="btn btn-default btn-fill btn-wd mr"
                                             data-ng-click="ctrl.goBackToProductList()" style="float: right;">
                                         <i class="ti-back-left"></i> Regresar</button>
@@ -133,8 +133,22 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
-
+            initFieldsNumeric();
         });
+
+        function initFieldsNumeric() {
+            $(".numeric-field").numeric({
+                allowPlus           : false,
+                allowMinus          : false,
+                allowThouSep        : false,
+                allowDecSep         : true,
+                allowLeadingSpaces  : false,
+                maxDigits           : 10,
+                maxDecimalPlaces    : 2,
+                maxPreDecimalPlaces : NaN,
+                max                 : NaN,
+                min                 : NaN
+            });
+        }
     </script>
 @endsection
