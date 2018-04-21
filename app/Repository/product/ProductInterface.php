@@ -26,4 +26,10 @@ interface ProductInterface {
     public function deleteProduct($productId);
 
     public function createProductImage($productId, $originalName, $name, $typeFile, $path);
+
+    public function findProductImageById($imageId);
+
+    public function setPrincipalImageByProduct($productImageId, $productId);
+
+    public function deleteProductImage($imageId);
 }

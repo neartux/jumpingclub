@@ -80,7 +80,6 @@ class ProductController extends Controller {
     }
 
     public function uploadImages(Request $request) {
-        echo "HER";
         try {
             // Valida que exista una imagen
             if ($request->hasFile('file')) {
@@ -91,7 +90,7 @@ class ProductController extends Controller {
                 $nameFile = explode(".", $image->getClientOriginalName())[0]."-".$folio.".".$extension;
                 $path = base_path() . ApplicationKeys::URL_SAVE_JUMPING_IMAGES . "/" . $productId;
                 $image->move($path, $nameFile);
-                //$this->deleteImage();
+                $this->product->createProductImage($productId, $image->getClientOriginalExtension(), $nameFile, $extension, $path . "/" . $nameFile);
                 return response()->json("Se ha subido correctamente la imagen");
             }
             return response()->json("No hay imagen por subir");
@@ -101,13 +100,25 @@ class ProductController extends Controller {
         }
     }
 
-    public function deleteImage() {
+    public function deleteImage($imageId) {
         try {
-            if (unlink(base_path() . ApplicationKeys::URL_SAVE_JUMPING_IMAGES."/img-tours.png")){
-                return response()->json("Se ha eliminado la imagen");
+            $productImage = $this->product->findProductImageById($imageId);
+            if (unlink($productImage->path)){
+                $this->product->deleteProductImage($imageId);
+                return response()->json(array("error" => false, "message" => "Se ha eliminado correctament la imagen"));
             }
-        } catch (\Exception $exception){
-            return response()->json($exception->getMessage());
+            return response()->json(array("error" => true, "message" => "Ocurrio algun error no se pudo eliminar la imagen"));
+        } catch (\Exception $e){
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function setMainImageByProduct($imageId, $productId) {
+        try {
+            $this->product->setPrincipalImageByProduct($imageId, $productId);
+            return response()->json(array("error" => false, "message" => "Imagen actualizado"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
         }
     }
 }

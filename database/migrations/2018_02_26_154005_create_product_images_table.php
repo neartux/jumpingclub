@@ -22,7 +22,7 @@ class CreateProductImagesTable extends Migration {
             $table->string('path', 100);
             $table->dateTime('creation_date');
             $table->boolean('main');
-            $table->integer('order');
+            $table->integer('order')->nullable();
 
             $table->foreign('status_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');

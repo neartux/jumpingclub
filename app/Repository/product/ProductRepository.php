@@ -21,9 +21,11 @@ use Illuminate\Support\Facades\DB;
 class ProductRepository implements ProductInterface {
 
     private $product;
+    private $productImage;
 
-    function __construct(Product $product) {
+    function __construct(Product $product, ProductImage $productImage) {
         $this->product = $product;
+        $this->productImage = $productImage;
     }
 
     public function findProductType() {
@@ -40,6 +42,10 @@ class ProductRepository implements ProductInterface {
 
     public function findNextProductFolio() {
         return (DB::selectOne('SELECT max(id) AS folio FROM product_image')->folio) + 1;
+    }
+
+    private function updateMainImagesByProduct($productId) {
+        DB::table('product_image')->where('product_id', $productId)->update(['main' => false]);
     }
 
     public function createProduct($productValues) {
@@ -97,8 +103,36 @@ class ProductRepository implements ProductInterface {
         $productImage->type_file = $typeFile;
         $productImage->path = $path;
         $productImage->creation_date = Carbon::now();
+        $productImage->order = null;
         $productImage->main = false;
 
         $productImage->save();
+    }
+
+    public function findProductImageById($imageId) {
+        return $this->productImage->findById($imageId);
+    }
+
+    public function setPrincipalImageByProduct($productImageId, $productId) {
+        // Coloca en falta main todas las imagenes de un producto
+        $this->updateMainImagesByProduct($productId);
+        // Busca la imagen seleccionada y la coloca como principal
+        $image = $this->findProductImageById($productImageId);
+        if(! $image){
+            throw new \Exception("No se encontro la imagen");
+        }
+        $image->main = true;
+
+        $image->save();
+    }
+
+    public function deleteProductImage($imageId) {
+        $image = $this->findProductImageById($imageId);
+        if(! $image){
+            throw new \Exception("No se encontro la imagen");
+        }
+        $image->status_id = StatusKeys::STATUS_INACTIVE;
+
+        $image->save();
     }
 }

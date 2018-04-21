@@ -32,4 +32,8 @@ class ProductImage extends Model {
     public function product() {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
     }
+
+    public function findById($id) {
+        return ProductImage::findOrFail($id);
+    }
 }

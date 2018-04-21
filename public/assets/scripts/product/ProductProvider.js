@@ -6,9 +6,16 @@
 
         service.contextPath = '';
         service.listProductImages = [];
+        service.valueReloadProduct = {
+            data: undefined
+        };
 
         service.setContextPath = function (contextPath) {
             service.contextPath = contextPath;
+        };
+
+        service.setDefaultValueReloadProduct = function () {
+            service.valueReloadProduct.data = undefined;
         };
 
         service.findProductTypes = function () {
@@ -51,10 +58,19 @@
         };
 
         service.findImagesByProduct = function (id) {
-            return $http.get(service.contextPath+'/admin/product/findImagesByProduct/'+id).then(function (response) {
-                console.info("RESPONSE = ", response);
-                service.listProductImages = response.data;
-            });
+            return $http.get(service.contextPath+'/admin/product/findImagesByProduct/'+id);
+        };
+
+        service.changeValueReloadProduct = function () {
+            return service.valueReloadProduct.data = true;
+        };
+
+        service.setMainImageByProduct = function (imageId, productId) {
+            return $http.get(service.contextPath+'/admin/product/setMainImageByProduct/'+imageId+'/'+productId);
+        };
+
+        service.deleteImage = function (imageId) {
+            return $http.get(service.contextPath+'/admin/product/deleteImage/'+imageId);
         };
 
         return service;

@@ -7,15 +7,15 @@
 
             <div class="tabbable-bordered">
                 <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li class="active initialTab">
                         <a href="#tab_general" data-toggle="tab"> General </a>
                     </li>
-                    <li data-ng-click="ctrlFile.setProductId(ctrl.product.id);">
+                    <li data-ng-click="ctrlFile.setProductId(ctrl.product.id);" class="secondTab">
                         <a href="#tab_images" data-toggle="tab"> Images </a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_general">
+                    <div class="tab-pane active initialTab" id="tab_general">
                         <div class="form-body mt-xl">
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="tab_images">
+                    <div class="tab-pane secondTab" id="tab_images">
 
                         <div class="col-md-3">
 
@@ -190,43 +190,36 @@
                         </div>
 
 
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover" data-ng-show="ctrl.listProductImages.length">
                             <thead>
                             <tr role="row" class="heading">
-                                <th width="8%"> Image </th>
-                                <th width="25%"> Label </th>
-                                <th width="8%"> Sort Order </th>
-                                <th width="10%"> Base Image </th>
-                                <th width="10%"> Small Image </th>
-                                <th width="10%"> Thumbnail </th>
-                                <th width="10%"> </th>
+                                <th width="8%"> Imagen </th>
+                                <th width="25%"> Nombre </th>
+                                <th width="8%"> Orden </th>
+                                <th width="10%"> Principal </th>
+                                <th width="10%"> Acciones </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr data-ng-repeat="image in ctrl.listProductImages">
                                 <td>
-                                    <a href="../assets/pages/media/works/img1.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                        <img class="img-responsive" src="../assets/pages/media/works/img1.jpg" alt=""> </a>
+                                    <img class="img-responsive" data-ng-src="/images/@{{ image.product_id }}/@{{ image.name }}" alt="@{{ image.name }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" name="product[images][1][label]" value="Thumbnail image"> </td>
+                                    @{{ image.name }}
+                                </td>
                                 <td>
-                                    <input type="text" class="form-control" name="product[images][1][sort_order]" value="1"> </td>
-                                <td>
-                                    <label>
-                                        <input type="radio" name="product[images][1][image_type]" value="1"> </label>
+                                    <input type="text" class="form-control border-input" data-ng-model="ctrl.listProductImages[$index].order" value="@{{ image.order }}">
                                 </td>
                                 <td>
                                     <label>
-                                        <input type="radio" name="product[images][1][image_type]" value="2"> </label>
+                                        <input type="radio" name="mainRadio" data-ng-model="ctrl.mainImageRadio"
+                                               value="@{{ ctrl.listProductImages[$index].main }}" data-ng-click="ctrl.setPrincipalImage($index);">
+                                    </label>
                                 </td>
                                 <td>
-                                    <label>
-                                        <input type="radio" name="product[images][1][image_type]" value="3" checked> </label>
-                                </td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-default btn-sm">
-                                        <i class="fa fa-times"></i> Remove </a>
+                                    <a href="javascript:;" class="btn btn-default btn-sm btn-fill" data-ng-click="ctrl.deleteImage($index);">
+                                        <i class="ti-trash"></i> Remove </a>
                                 </td>
                             </tr>
                             </tbody>

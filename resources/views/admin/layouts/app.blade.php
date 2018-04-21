@@ -20,6 +20,8 @@
     <!-- Animation library for notifications   -->
     <link href="{{ asset('assets/global/css/animate.min.css') }}" rel="stylesheet"/>
 
+    <link href="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+
     <!--  Paper Dashboard core CSS    -->
     <link href="{{ asset('assets/global/css/paper-dashboard.css') }}" rel="stylesheet"/>
 
@@ -121,11 +123,16 @@
 <!--  Notifications Plugin    -->
 <script src="{{ asset('assets/global/js/bootstrap-notify.js') }}"></script>
 
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap-sweetalert/ui-sweetalert.js') }}" type="text/javascript"></script>
+
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script src="{{ asset('assets/global/js/paper-dashboard.js') }}"></script>
 
 <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/global/js/demo.js') }}"></script>
+
+<script src="{{ asset('assets/global/js/common.js') }}"></script>
 
 @section('script-section')
 
