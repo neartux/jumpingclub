@@ -4,6 +4,7 @@ use App\Utils\Keys\common\StatusKeys;
 use App\Utils\Keys\store\StoreKeys;
 use App\Utils\Keys\user\UserKeys;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserTableSeeder extends Seeder {
 
