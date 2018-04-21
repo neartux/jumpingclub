@@ -1,7 +1,7 @@
 (function (){
-    var app = angular.module('Product', ['ProductProvider']);
+    var app = angular.module('Product', ['ProductProvider', 'datatables']);
 
-    app.controller('ProductController', function($scope, $http, ProductService) {
+    app.controller('ProductController', function($scope, $http, ProductService, DTOptionsBuilder, DTColumnDefBuilder) {
         var ctrl = this;
         ctrl.listProductImages = [];
         ctrl.valueReloadProduct = ProductService.valueReloadProduct;
@@ -12,6 +12,17 @@
         ctrl.isCreateProcess = true;
         ctrl.productTypeId = "0";
         ctrl.mainImageRadio = "1";
+
+        ctrl.dtInstance = {};
+        ctrl.dtOptions = DTOptionsBuilder.newOptions().withDOM('C<"clear">lfrtip').withOption('aaSorting', []);
+        ctrl.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(1).notSortable(),
+            DTColumnDefBuilder.newColumnDef(2).notSortable(),
+            DTColumnDefBuilder.newColumnDef(3).notSortable(),
+            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+            DTColumnDefBuilder.newColumnDef(5).notSortable()
+        ];
 
         /**
          * Initialize app, instance context path of app

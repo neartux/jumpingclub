@@ -2,6 +2,15 @@
 
 @section('content')
 
+    <style>
+        #DataTables_Table_0_length, #DataTables_Table_0_filter {
+            display: inline;
+        }
+        #DataTables_Table_0_filter {
+            float: right;
+        }
+    </style>
+
     <div data-ng-app="AppProduct" data-ng-controller="ProductController as ctrl" data-ng-init="ctrl.init('{{ URL::to('/') }}')">
 
         <div class="content" data-ng-show="ctrl.showProductList">
@@ -34,8 +43,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="ctrl.productsList.length">
-
-                                        <table class="table table-striped table-bordered">
+                                        <!-- <table class="table table-striped table-bordered"> -->
+                                        <table dt-column-defs="ctrl.dtColumnDefs" datatable="ng" dt-instance="ctrl.dtInstance"
+                                               dt-options="ctrl.dtOptions" class="table table-bordered table-striped table-condensed">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
@@ -127,6 +137,7 @@
     <script src="{{ asset('assets/global/plugins/angularjs/angular-file-upload/AngularFileUploadController.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/angularjs/angular-file-upload/directives.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/form-jasnyupload/fileinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/angular-datatable/angular-datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/product/ProductProvider.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/product/ProductController.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/product/AppProduct.js') }}" type="text/javascript"></script>

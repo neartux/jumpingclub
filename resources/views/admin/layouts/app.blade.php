@@ -17,6 +17,9 @@
     <!-- Bootstrap core CSS     -->
     <link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet" />
 
+    <link href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/angular-datatable/angular-datatables.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- Animation library for notifications   -->
     <link href="{{ asset('assets/global/css/animate.min.css') }}" rel="stylesheet"/>
 
@@ -115,6 +118,8 @@
 <!--   Core JS Files   -->
 <script src="{{ asset('assets/global/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/angularjs/angular.min.js') }}" type="text/javascript"></script>
 
 <!--  Checkbox, Radio & Switch Plugins -->
