@@ -47,5 +47,15 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
     Route::post('/product/uploadimages', 'ProductController@uploadImages')->name('admin_product_upload_image');
 
     Route::get('/product/changeOrderImage/{imageId}/{order}', 'ProductController@changeOrderImage');
-    
+
+    Route::get('/client/list', 'ClientController@clientList')->name('admin_client_list');
+
+    Route::get('/client/findAllClients', 'ClientController@findAllClients');
+
+    Route::post('/client/createClient', 'ClientController@createClient');
+
+    Route::post('/client/updateClient', 'ClientController@updateClient');
+
+    Route::get('/client/delete/{id}', 'ClientController@deleteClient');
+
 });

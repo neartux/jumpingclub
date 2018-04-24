@@ -55,6 +55,12 @@
                         <p>Productos</p>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin_client_list') }}">
+                        <i class="ti-user"></i>
+                        <p>Clientes</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

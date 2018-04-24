@@ -33,11 +33,6 @@ class Client extends Model {
     }
 
     public function findById($id) {
-        return DB::table('clients')->select('clients.id', 'personal_data.name', 'personal_data.last_name')
-            ->join('personal_data', function ($join) use ($id) {
-                $join->on('clients.personal_data_id', '=', 'personal_data.id')
-                    ->where('clients.id', '=', $id);
-            })
-            ->first();
+        return Client::findOrFail($id);
     }
 }

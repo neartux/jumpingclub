@@ -20,6 +20,7 @@
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">
+                                    <i class="ti-dropbox"></i>
                                     Productos
                                     <button class="btn btn-default btn-fill btn-wd" data-ng-click="ctrl.showCreateProduct();"
                                             style="float: right;">

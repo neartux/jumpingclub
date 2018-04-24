@@ -16,7 +16,7 @@ class CreatePersonalDataTable extends Migration {
             $table->increments('id');
             $table->string('name', 255);
             $table->string('last_name', 255);
-            $table->string('company_name', 255);
+            $table->string('company_name', 255)->nullable();
         });
     }
 
