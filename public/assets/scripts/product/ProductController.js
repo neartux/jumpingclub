@@ -130,8 +130,9 @@
                 text: msj,
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Aplicar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {
@@ -155,8 +156,9 @@
                 text: "¿Deseas eliminar el producto?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Eliminar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {
@@ -188,8 +190,9 @@
                 text: "¿Estas seguro de colocar imagen como principal?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Aplicar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {
@@ -212,8 +215,9 @@
                 text: "¿Estas seguro de eliminar la imagen?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Eliminar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {
@@ -238,8 +242,9 @@
                 text: "¿Estas seguro de actualizar el orden?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Actualizar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {

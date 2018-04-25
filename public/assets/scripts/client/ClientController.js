@@ -118,8 +118,9 @@
                 text: "¿Seguro que deseas eliminar al cliente?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonClass: "btn-danger",
+                confirmButtonClass: "btn-danger btn-fill",
                 confirmButtonText: "Si, Eliminar!",
+                cancelButtonClass: "btn-default btn-fill",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: true
             }, function (isConfirm) {
