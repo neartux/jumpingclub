@@ -46,6 +46,13 @@ class Sale extends Model {
     }
 
     /**
+     * Get the payment type record associated with the sale.
+     */
+    public function paymentType() {
+        return $this->hasOne('App\Models\PaymentType', 'id', 'payment_type_id');
+    }
+
+    /**
      * Get the sale details for the sale.
      */
     public function saleDetails() {

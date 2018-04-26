@@ -20,5 +20,8 @@ final class ApplicationKeys {
     const PATTERN_FORMAT_DATE = "%d/%m/%Y";
     const PATTERN_FORMAT_TIME = "%h:%i %p";
     const PATTERN_DATE_MYSQL = "Y-m-d";
+    const PAYMENT_TYPE_FULL_PAYMENT = 1;
+    const PAYMENT_TYPE_PENDING_PAYMENT = 2;
+    const PAYMENT_TYPE_ADVANCE_PAYMENT = 3;
 
 }

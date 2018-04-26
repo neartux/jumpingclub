@@ -19,6 +19,7 @@ class CreateSalesTable extends Migration {
             $table->integer('client_id')->unsigned();
             $table->integer('personal_data_id')->unsigned();
             $table->integer('location_data_id')->unsigned();
+            $table->integer('payment_type_id')->unsigned();
             $table->dateTime('created_at');
             $table->dateTime('event_date');
             $table->time('event_time');
@@ -26,6 +27,8 @@ class CreateSalesTable extends Migration {
             $table->decimal('taxes', 8, 2)->nullable();
             $table->decimal('total_discount', 8, 2)->nullable();
             $table->decimal('total', 8, 2);
+            $table->decimal('balance', 8, 2);
+            $table->decimal('advance_payment', 8, 2);
             $table->decimal('amount_pay', 8, 2)->nullable();
             $table->text('comments')->nullable();
 
@@ -42,6 +45,9 @@ class CreateSalesTable extends Migration {
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('location_data_id')->references('id')->on('location_data')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('payment_type_id')->references('id')->on('payment_type')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
