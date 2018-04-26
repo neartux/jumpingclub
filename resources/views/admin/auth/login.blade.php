@@ -53,7 +53,7 @@
                                 <div class="card-content">
                                     <div class="form-group {{ $errors->has('user_name') ? 'has-error' : '' }}">
                                         <label>Username</label>
-                                        <input class="form-control form-control-solid placeholder-no-fix form-group input-no-border" id="user_name"
+                                        <input class="form-control form-control-solid placeholder-no-fix border-input form-group input-no-border" id="user_name"
                                                value="{{ old('user_name') }}" autofocus
                                                type="text" autocomplete="off" placeholder="Username" name="user_name" required/>
                                         @if ($errors->has('user_name'))
@@ -65,7 +65,7 @@
 
                                     <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                                         <label>Password</label>
-                                        <input class="form-control form-control-solid placeholder-no-fix form-group" id="password"
+                                        <input class="form-control form-control-solid placeholder-no-fix border-input form-group" id="password"
                                                type="password" autocomplete="off" placeholder="Password" name="password" required/>
                                     </div>
                                     @if ($errors->has('password'))

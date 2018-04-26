@@ -32,6 +32,12 @@
 
                                 <div class="row">
 
+                                    <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="!ctrl.reservationList.length">
+                                        <div class="alert alert-warning">
+                                            <span><b> Info - </b> No se encontraron clientes</span>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="ctrl.clientList.length">
 
                                         <table dt-column-defs="ctrl.dtColumnDefs" datatable="ng" dt-instance="ctrl.dtInstance"

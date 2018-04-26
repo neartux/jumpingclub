@@ -17,5 +17,8 @@ final class ApplicationKeys {
     const PAYMENT_METHOD_CREDIT_CARD = 2;
     const PAYMENT_METHOD_TRANSFER = 3;
     const PAYMENT_METHOD_DEPOSIT = 4;
+    const PATTERN_FORMAT_DATE = "%d/%m/%Y";
+    const PATTERN_FORMAT_TIME = "%h:%i %p";
+    const PATTERN_DATE_MYSQL = "Y-m-d";
 
 }

@@ -32,6 +32,20 @@ class Sale extends Model {
     }
 
     /**
+     * Get the personalData record associated with the sale.
+     */
+    public function personalData() {
+        return $this->hasOne('App\Models\PersonalData', 'id', 'personal_data_id');
+    }
+
+    /**
+     * Get the locationData record associated with the sale.
+     */
+    public function locationData() {
+        return $this->hasOne('App\Models\LocationData', 'id', 'location_data_id');
+    }
+
+    /**
      * Get the sale details for the sale.
      */
     public function saleDetails() {

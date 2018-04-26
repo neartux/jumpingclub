@@ -50,15 +50,21 @@
 
             <ul class="nav">
                 <li>
+                    <a href="{{ route('admin_client_list') }}">
+                        <i class="ti-user"></i>
+                        <p>Clientes</p>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin_product_list') }}">
                         <i class="ti-dropbox"></i>
                         <p>Productos</p>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin_client_list') }}">
-                        <i class="ti-user"></i>
-                        <p>Clientes</p>
+                    <a href="{{ route('admin_reservation_list') }}">
+                        <i class="ti-notepad"></i>
+                        <p>Reservas</p>
                     </a>
                 </li>
             </ul>

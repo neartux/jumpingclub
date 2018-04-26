@@ -58,4 +58,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
 
     Route::get('/client/delete/{id}', 'ClientController@deleteClient');
 
+    Route::get('/reservation/list', 'ReservationController@reservationList')->name('admin_reservation_list');
+
+    Route::post('/reservation/findAllReservation', 'ReservationController@findAllReservation');
+
 });

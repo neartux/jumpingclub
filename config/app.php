@@ -169,6 +169,7 @@ return [
          */
         App\Service\product\ProductService::class,
         App\Service\client\ClientService::class,
+        App\Service\sale\SaleService::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'StatusKeys' => \App\Utils\Keys\common\StatusKeys::class,
 
     ],
 
