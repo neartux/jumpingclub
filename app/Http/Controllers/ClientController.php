@@ -61,4 +61,8 @@ class ClientController extends Controller{
             return response()->json(array("error" => true, "message" => $e->getMessage()));
         }
     }
+
+    public function findClientById($clientId) {
+        return response()->json($this->client->findClientById($clientId));
+    }
 }

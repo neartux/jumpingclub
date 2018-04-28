@@ -47,6 +47,7 @@
         ctrl.showCreateClient = function () {
             ctrl.showClientList = false;
             ctrl.isCreateProcess = true;
+            ctrl.client = {};
         };
 
         /**

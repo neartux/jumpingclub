@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Repository\client\ClientInterface;
 use App\Repository\sale\SaleInterface;
 use App\Utils\common\CommonsUtils;
 use Illuminate\Http\Request;
@@ -15,15 +16,17 @@ use Illuminate\Http\Request;
 class ReservationController extends Controller {
 
     private $sale;
+    private $client;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(SaleInterface $sale) {
+    public function __construct(SaleInterface $sale, ClientInterface $client) {
         $this->middleware('auth');
         $this->sale = $sale;
+        $this->client = $client;
     }
 
     public function reservationList() {
@@ -34,6 +37,10 @@ class ReservationController extends Controller {
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         return response()->json($this->sale->findAllSalesByDates(CommonsUtils::stringToDate($startDate), CommonsUtils::stringToDate($endDate), 1));
+    }
+
+    public function findClientByNameOrLastName(Request $request) {
+        return response()->json($this->client->findClientByNameOrLastName($request->input('q')));
     }
 
 }

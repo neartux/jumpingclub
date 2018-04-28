@@ -2479,14 +2479,14 @@
         disabledDates: false,
         enabledDates: false,
         icons: {
-            time: 'glyphicon glyphicon-time',
-            date: 'glyphicon glyphicon-calendar',
-            up: 'glyphicon glyphicon-chevron-up',
-            down: 'glyphicon glyphicon-chevron-down',
-            previous: 'glyphicon glyphicon-chevron-left',
-            next: 'glyphicon glyphicon-chevron-right',
+            time: 'ti-time',
+            date: 'ti-calendar',
+            up: 'ti-angle-up',
+            down: 'ti-angle-down',
+            previous: 'ti-angle-left',
+            next: 'ti-angle-right',
             today: 'glyphicon glyphicon-screenshot',
-            clear: 'glyphicon glyphicon-trash',
+            clear: 'ti-trash',
             close: 'glyphicon glyphicon-remove'
         },
         tooltips: {

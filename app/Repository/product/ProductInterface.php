@@ -34,4 +34,6 @@ interface ProductInterface {
     public function deleteProductImage($imageId);
 
     public function changeOrderImage($imageId, $order);
+
+    public function findProductByCodeOrDescription($re);
 }

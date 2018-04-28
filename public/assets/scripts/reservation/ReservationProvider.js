@@ -14,6 +14,10 @@
             service.contextPath = contextPath;
         };
 
+        service.getContextPath = function () {
+            return service.contextPath;
+        };
+
         service.findAllReservations = function (starDate, endDate) {
             service.reservationList.data = [];
             return $http({
@@ -25,6 +29,14 @@
                 console.info("response = ", response);
                 service.reservationList.data = response.data;
             });
+        };
+
+        /**
+         * Encuentra un cliente para la venta por su id
+         * @param clientId El id del cliente
+         */
+        service.findClientById = function (clientId) {
+            return $http.get(service.contextPath+'/admin/client/findClientById/'+clientId);
         };
 
         return service;

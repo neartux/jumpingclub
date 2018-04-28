@@ -10,6 +10,8 @@ namespace App\Repository\client;
 
 interface ClientInterface {
 
+    public function findClientById($clientId);
+
     public function findAllClients();
 
     public function createClient($clientValues);
@@ -17,5 +19,7 @@ interface ClientInterface {
     public function updateClient($clientValues);
 
     public function deleteClient($id);
+
+    public function findClientByNameOrLastName($re);
 
 }

@@ -2,6 +2,8 @@
 
 @section('content')
     <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/easy-autocomplete/easy-autocomplete.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/easy-autocomplete/easy-autocomplete.themes.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         #DataTables_Table_0_length, #DataTables_Table_0_filter {
             display: inline;
@@ -38,21 +40,6 @@
 
                                 <div class="row">
 
-                                    {{--<div class="col-sm-12">
-                                        <div class="col-md-4">
-                                            <h4 class="card-title">Date Picker</h4>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control border-input datepicker" placeholder="Date Picker Here"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h4 class="card-title">Time Picker</h4>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control border-input timepicker" placeholder="Time Picker Here"/>
-                                            </div>
-                                        </div>
-                                    </div>--}}
-
                                     <div class="col-sm-12">
                                         <form action="#" class="form-horizontal form-bordered">
                                             <div class="form-body">
@@ -88,8 +75,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12" data-ng-show="ctrl.reservationList.data.length">
+                                        <!-- <table class="table table-striped table-bordered"> -->
                                         <table dt-column-defs="ctrl.dtColumnDefs" datatable="ng" dt-instance="ctrl.dtInstance"
-                                               dt-options="ctrl.dtOptions" class="table table-bordered table-striped table-condensed pt">
+                                               dt-options="ctrl.dtOptions" class="table table-bordered table-striped table-condensed">
                                             <thead>
                                             <tr>
                                                 <th width="3%" class="bold font-size14 p-n">#</th>
@@ -149,7 +137,7 @@
 	                                                        <i class="ti-trash"></i>
 	                                                    </a>
 	                                                </td>
-                                            	</tr>	
+                                            	</tr>
                                             </tbody>
                                         </table>
 
@@ -165,31 +153,7 @@
             </div>
         </div>
 
-        <div class="content" data-ng-show="!ctrl.showReservationList">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">
-                                    Informacion de la reservacion
-                                    <button type="button" name="back" class="btn btn-default btn-fill btn-wd mr"
-                                            data-ng-click="ctrl.goBackToProductList()" style="float: right;">
-                                        <i class="ti-back-left"></i> Regresar</button>
-                                </h4>
-                            </div>
-                            <div class="content mt-xl">
-
-
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        @include('admin/reservation/reservationForm')
 
     </div>
 
@@ -199,7 +163,10 @@
 @section('script-section')
     <script src="{{ asset('assets/global/plugins/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/global/plugins/demo.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/bootstrap-selectpicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/demo.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/easy-autocomplete/jquery.easy-autocomplete.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/angular-datatable/angular-datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/reservation/ReservationProvider.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/reservation/ReservationController.js') }}" type="text/javascript"></script>

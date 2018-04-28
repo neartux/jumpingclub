@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
 
     Route::get('/product/changeOrderImage/{imageId}/{order}', 'ProductController@changeOrderImage');
 
+    Route::get('/product/findProductsByCodeOrName', 'ProductController@findProductsByCodeOrName');
+
     Route::get('/client/list', 'ClientController@clientList')->name('admin_client_list');
 
     Route::get('/client/findAllClients', 'ClientController@findAllClients');
@@ -58,8 +60,12 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()  {
 
     Route::get('/client/delete/{id}', 'ClientController@deleteClient');
 
+    Route::get('/client/findClientById/{clientId}', 'ClientController@findClientById');
+
     Route::get('/reservation/list', 'ReservationController@reservationList')->name('admin_reservation_list');
 
     Route::post('/reservation/findAllReservation', 'ReservationController@findAllReservation');
+
+    Route::get('/reservation/findClientByNameOrLastName', 'ReservationController@findClientByNameOrLastName');
 
 });

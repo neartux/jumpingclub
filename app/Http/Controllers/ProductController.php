@@ -130,4 +130,8 @@ class ProductController extends Controller {
             return response()->json(array("error" => true, "message" => $e->getMessage()));
         }
     }
+
+    public function findProductsByCodeOrName(Request $request) {
+        return response()->json($this->product->findProductByCodeOrDescription($request->input('q')));
+    }
 }

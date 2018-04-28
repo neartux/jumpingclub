@@ -6,6 +6,9 @@
         ctrl.reservationList = ReservationService.reservationList;
         ctrl.dates = { startDate: '', endDate: '' };
         ctrl.showReservationList = true;
+        ctrl.ventaCompletaTO = {};
+        ctrl.clientId = undefined;
+        ctrl.codeProduct = '';
 
         ctrl.dtInstance = {};
         ctrl.dtOptions = DTOptionsBuilder.newOptions().withDOM('C<"clear">lfrtip').withOption('aaSorting', []);
@@ -34,6 +37,10 @@
             ctrl.initDateRange();
             // Busca todas las reservaciones por fecha
             ctrl.findReservationsByDate();
+            // Init autocomplete client
+            ctrl.initAutocompleteClient();
+            // Init autocomplete product
+            ctrl.initAutocompleteProduct();
         };
 
         /**
@@ -60,6 +67,110 @@
          */
         ctrl.findReservationsByDate = function () {
             return ReservationService.findAllReservations(ctrl.dates.startDate, ctrl.dates.endDate);
+        };
+
+        /**
+         * Busca un cliente por su id
+         * @param idClient El id del cliente
+         * @returns {PromiseLike<T> | Promise<T> | *}
+         */
+        ctrl.findClientById = function (idClient) {
+            return ReservationService.findClientById(idClient).then(function (response) {
+                if (response.data.id !== undefined) {
+                    console.info("response.data = ", response.data);
+                    ctrl.ventaCompletaTO.client = response.data;
+                }
+                ctrl.clientId = undefined;
+            });
+        };
+
+        /**
+         * Busca un producto por su codigo
+         */
+        ctrl.findProductByCode = function () {
+            if (ctrl.codeProduct !== '') {
+                return PointSaleService.findProductByCode(ctrl.codeProduct).then(function (response) {
+                    conosle.info("response.data = ", response.data);
+                    if(response.data.id !== undefined) {
+                        //ctrl.addProductToSale(response.data);
+                    }
+                    //ctrl.cleanAndFocusInputProduct();
+                });
+            }
+        };
+
+        /**
+         * Configura el autocomplete para cliente
+         */
+        ctrl.initAutocompleteClient = function () {
+            var options = {
+                minCharNumber: 2,
+                url: function(phrase) {
+                    return ReservationService.getContextPath() + "/admin/reservation/findClientByNameOrLastName";
+                },
+                getValue: function(element) {
+                    return element.name + ' ' + element.last_name;
+                },
+                ajaxSettings: { dataType: "json", method: "GET", data: { dataType: "json" } },
+                preparePostData: function(data) {
+                    data.q = $("#clientId").val();
+                    return data;
+                },
+                list: {
+                    onSelectItemEvent: function() {
+                        ctrl.clientId = $("#clientId").getSelectedItemData().id;
+                    },
+                    onHideListEvent: function() {
+                        $("#clientId").val('');
+                    },
+                    match: {
+                        enabled: true
+                    },
+                    onClickEvent: function() {
+                        ctrl.findClientById(ctrl.clientId);
+                    }
+                },
+                theme: "round",
+                requestDelay: 300
+            };
+            $("#clientId").easyAutocomplete(options);
+        };
+
+        /**
+         * Configura el autocomplete para busqueda avanzada del producto
+         */
+        ctrl.initAutocompleteProduct = function () {
+            var options = {
+                minCharNumber: 2,
+                url: function(phrase) {
+                    return ReservationService.getContextPath() + "/admin/product/findProductsByCodeOrName";
+                },
+                getValue: function(element) {
+                    return element.code + ' - ' + element.description;
+                },
+                ajaxSettings: { dataType: "json", method: "GET", data: { dataType: "json" } },
+                preparePostData: function(data) {
+                    data.q = $("#productIdSearch").val();
+                    return data;
+                },
+                list: {
+                    onSelectItemEvent: function() {
+                        ctrl.codeProduct = $("#productIdSearch").getSelectedItemData().code;
+                    },
+                    onHideListEvent: function() {
+                        $("#productIdSearch").val('');
+                    },
+                    match: {
+                        enabled: true
+                    },
+                    onClickEvent: function() {
+                        ctrl.findProductByCode();
+                    }
+                },
+                theme: "round",
+                requestDelay: 300
+            };
+            $("#productIdSearch").easyAutocomplete(options);
         };
 
     });

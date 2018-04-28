@@ -22,6 +22,10 @@ class ClientRepository implements ClientInterface {
         $this->client = $client;
     }
 
+    public function findClientById($clientId) {
+        return $this->client->findClientById($clientId);
+    }
+
     public function findAllClients() {
         return DB::select('SELECT client.id,personal_data.name,personal_data.last_name,location_data.address,location_data.city as colonia,
         location_data.phone,location_data.cell_phone,location_data.email
@@ -83,6 +87,15 @@ class ClientRepository implements ClientInterface {
         $client->status_id = StatusKeys::STATUS_INACTIVE;
 
         $client->save();
+    }
+
+    public function findClientByNameOrLastName($re) {
+        return DB::select('
+        SELECT client.id,personal_data.name,personal_data.last_name
+        FROM client
+        INNER JOIN personal_data ON client.personal_data_id = personal_data.id
+        WHERE client.status_id = '.StatusKeys::STATUS_ACTIVE.'
+        AND (name LIKE \'%'.$re.'%\' OR last_name LIKE \'%'.$re.'%\')');
     }
 
 }

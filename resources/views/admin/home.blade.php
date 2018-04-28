@@ -12,7 +12,7 @@
                 <li>
                     <i class="icon-home"></i>
                     <a href="index.html">Home</a>
-                    <i class="fa fa-angle-right"></i>
+                    <i class="ti-angle-right"></i>
                 </li>
                 <li>
                     <span>Dashboard</span>
