@@ -32,7 +32,7 @@ class ClientRepository implements ClientInterface {
         FROM client
         INNER JOIN location_data ON client.location_data_id = location_data.id
         INNER JOIN personal_data ON client.personal_data_id = personal_data.id
-        WHERE client.status_id = 1');
+        WHERE client.status_id = '.StatusKeys::STATUS_ACTIVE);
     }
 
     public function createClient($clientValues) {

@@ -13,6 +13,7 @@ use App\Models\Client;
 use App\Models\Deparment;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductType;
 use App\Utils\Keys\common\ApplicationKeys;
 use App\Utils\Keys\common\StatusKeys;
 use Carbon\Carbon;
@@ -22,10 +23,12 @@ class ProductRepository implements ProductInterface {
 
     private $product;
     private $productImage;
+    private $productType;
 
-    function __construct(Product $product, ProductImage $productImage) {
+    function __construct(Product $product, ProductImage $productImage, ProductType $productType) {
         $this->product = $product;
         $this->productImage = $productImage;
+        $this->productType = $productType;
     }
 
     public function findProductType() {
@@ -65,6 +68,16 @@ class ProductRepository implements ProductInterface {
         return $product->id;
     }
 
+    public function createProductType($values) {
+        $type = new ProductType();
+        $type->description = $values['description'];
+        $type->status_id = StatusKeys::STATUS_ACTIVE;
+
+        $type->save();
+
+        return $type->id;
+    }
+
     public function updateProduct($productValues) {
         $product = $this->product->findById($productValues['id']);
         if (!$product) {
@@ -78,6 +91,15 @@ class ProductRepository implements ProductInterface {
         $product->sale_price = floatval($productValues['sale_price']);
         $product->stock = floatval($productValues['stock']);
         $product->save();
+    }
+
+    public function updateTypeProduct($values) {
+        $type = $this->productType->findById($values['id']);
+        if (!$type) {
+            throw new \Exception("La categoria no se encontro");
+        }
+        $type->description = $values['description'];
+        $type->save();
     }
 
     public function publicProductById($productId, $isPublic) {
@@ -96,6 +118,15 @@ class ProductRepository implements ProductInterface {
         }
         $product->status_id = StatusKeys::STATUS_INACTIVE;
         $product->save();
+    }
+
+    public function deleteProductType($id) {
+        $type = $this->productType->findById($id);
+        if (!$type) {
+            throw new \Exception("La categoria no se encontro");
+        }
+        $type->status_id = StatusKeys::STATUS_INACTIVE;
+        $type->save();
     }
 
     public function createProductImage($productId, $originalName, $name, $typeFile, $path) {

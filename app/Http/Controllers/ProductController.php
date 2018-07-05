@@ -134,4 +134,36 @@ class ProductController extends Controller {
     public function findProductsByCodeOrName(Request $request) {
         return response()->json($this->product->findProductByCodeOrDescription($request->input('q')));
     }
+
+    public function productTypeList() {
+        return view('/admin/producttype/producttypelist');
+    }
+
+    public function createProductType(Request $request) {
+        try {
+            $id = $this->product->createProductType($request->all());
+            return response()->json(array("error" => false, "message" => "se ha creado la categoria correctamente", "id" => $id));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function updateProductType(Request $request) {
+        try {
+
+            $this->product->updateTypeProduct($request->all());
+            return response()->json(array("error" => false, "message" => "se ha actualizado la categoria correctamente"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
+
+    public function deleteProductType($id) {
+        try {
+            $this->product->deleteProductType($id);
+            return response()->json(array("error" => false, "message" => "Categoria eliminada"));
+        } catch (\Exception $e) {
+            return response()->json(array("error" => true, "message" => $e->getMessage()));
+        }
+    }
 }

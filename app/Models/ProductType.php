@@ -9,4 +9,8 @@ class ProductType extends Model {
     protected $table = 'product_type';
 
     public $timestamps = false;
+
+    public function findById($id) {
+        return ProductType::findOrFail($id);
+    }
 }

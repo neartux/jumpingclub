@@ -56,6 +56,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin_categories_list') }}">
+                        <i class="ti-tag"></i>
+                        <p>Categorias</p>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin_product_list') }}">
                         <i class="ti-dropbox"></i>
                         <p>Productos</p>

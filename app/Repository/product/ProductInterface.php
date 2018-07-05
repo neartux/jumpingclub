@@ -17,13 +17,19 @@ interface ProductInterface {
 
     public function findNextProductFolio();
 
+    public function createProductType($values);
+
     public function createProduct($productValues);
 
     public function updateProduct($productValues);
 
     public function publicProductById($productId, $isPublic);
 
+    public function updateTypeProduct($values);
+
     public function deleteProduct($productId);
+
+    public function deleteProductType($id);
 
     public function createProductImage($productId, $originalName, $name, $typeFile, $path);
 
