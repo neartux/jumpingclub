@@ -25,9 +25,6 @@
                 url: service.contextPath + '/admin/reservation/findAllReservation',
                 data: $.param({startDate: starDate, endDate: endDate}),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                console.info("response = ", response);
-                service.reservationList.data = response.data;
             });
         };
 
@@ -37,6 +34,27 @@
          */
         service.findClientById = function (clientId) {
             return $http.get(service.contextPath+'/admin/client/findClientById/'+clientId);
+        };
+
+        service.findProductByCode = function (id) {
+            return $http.get(service.contextPath+'/admin/product/findProductsById/'+id);
+        };
+
+        service.createSale = function (ventaCompletaTO) {
+            return $http({
+                method: 'POST',
+                url: service.contextPath + '/admin/reservation/createSale',
+                data: $.param(ventaCompletaTO),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        };
+
+        service.changeStatusReservation = function (id, status_id) {
+            return $http.get(service.contextPath+'/admin/reservation/changeStatus/'+id+'/'+status_id);
+        };
+
+        service.eliminarReserva = function (id) {
+            return $http.get(service.contextPath+'/admin/reservation/deleteReserva/'+id);
         };
 
         return service;

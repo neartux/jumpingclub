@@ -42,4 +42,6 @@ interface ProductInterface {
     public function changeOrderImage($imageId, $order);
 
     public function findProductByCodeOrDescription($re);
+
+    public function findProductById($code);
 }

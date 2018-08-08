@@ -19,7 +19,7 @@ class CreateLocationDataTable extends Migration
             $table->string('city', 150);
             $table->string('phone', 25)->nullable();
             $table->string('cell_phone', 25);
-            $table->string('email', 50);
+            $table->string('email', 50)->nullable();
         });
     }
 

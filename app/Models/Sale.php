@@ -66,4 +66,8 @@ class Sale extends Model {
         return $this->belongsToMany('App\Models\PaymentMethod', 'sale_payment_methods')
             ->withPivot('sale_id', 'payment_method_id', 'amount');
     }
+
+    public function findById($id) {
+        return Sale::findOrFail($id);
+    }
 }

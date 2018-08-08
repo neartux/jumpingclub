@@ -10,3 +10,16 @@ function showNotify(type, icon, message) {
         timer: 200
     });
 }
+
+function startLoading(message) {
+    var options = {
+        theme:"sk-circle",
+        message:message
+    };
+
+    HoldOn.open(options);
+}
+
+function stopLoading() {
+    HoldOn.close();
+}

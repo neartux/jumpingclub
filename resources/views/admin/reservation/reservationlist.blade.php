@@ -4,6 +4,9 @@
     <link href="{{ asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/easy-autocomplete/easy-autocomplete.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/global/plugins/easy-autocomplete/easy-autocomplete.themes.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         #DataTables_Table_0_length, #DataTables_Table_0_filter {
             display: inline;
@@ -16,6 +19,12 @@
         }
         .font-size12 {
         	font-size: 12px !important;
+        }
+        .easy-autocomplete-container {
+            top: 20px;
+        }
+        .easy-autocomplete {
+            width: 100px !important;
         }
     </style>
 
@@ -86,15 +95,13 @@
                                                 <th class="bold font-size14 p-n">Cliente</th>
                                                 <th width="8%" class="bold font-size14 p-n">Total</th>
                                                 <th width="4%" class="bold font-size14 p-n">Pagado</th>
-                                                <th width="4%" class="bold font-size14 p-n">Abono</th>
-                                                <th width="4%" class="bold font-size14 p-n">Saldo</th>
                                                 <th width="15%" class="bold font-size14 p-n">Comentarios</th>
-                                                <th width="10%" class="bold font-size14 p-n">Estatus</th>
+                                                <th width="15%" class="bold font-size14 p-n">Estatus</th>
                                                 <th width="15%" class="bold font-size14 p-n">Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            	<tr data-ng-repeat="reservation in ctrl.reservationList.data">
+                                            	<tr data-ng-repeat="reservation in ctrl.reservationList.data" data-ng-init="ctrl.setStringStatus(reservation);">
 	                                                <td class="font-size12">@{{ $index + 1 }}</td>
 	                                                <td class="font-size12">@{{ reservation.created_at }}</td>
 	                                                <td class="font-size12">@{{ reservation.event_date }} @{{ reservation.event_time }}</td>
@@ -103,37 +110,21 @@
 	                                                <td class="font-size12">
                                             			<i class="ti-check"></i>
                                             		</td>
-                                            		<td class="font-size12">
-                                            			$500
-                                            		</td>
-                                            		<td class="font-size12">
-                                            			$1000
-                                            		</td>
 	                                                <td class="font-size12">@{{ reservation.comments }}</td>
 	                                                <td class="font-size12">
-	                                                    <span class="badge badge-info"
-	                                                          data-ng-if="reservation.status_id == '{{ StatusKeys::STATUS_ACTIVE}}'">
-	                                                        Activo
-	                                                    </span>
+                                                        <select class="form-control" data-ng-model="reservation.status_ids"
+                                                                data-ng-change="ctrl.changeStatuReservation(reservation);">
+                                                            <option value="">Seleccion</option>
+                                                            <option value="{{ StatusKeys::STATUS_RESERVADO}}">Reservado</option>
+                                                            <option value="{{ StatusKeys::STATUS_PAGADO}}">Pagado</option>
+                                                            <option value="{{ StatusKeys::STATUS_ENVIADO}}">Enviado</option>
+                                                            <option value="{{ StatusKeys::STATUS_FINALIZADO}}">Finalizado</option>
+                                                        </select>
 	                                                </td>
 	                                                <td class="font-size12">
-	                                                    <a href="javascript:;" class="btn btn-simple btn-info btn-icon like"
-	                                                       title="Editar @{{ product.name }}" data-ng-click="ctrl.showEditProduct(product);">
-	                                                        <i class="ti-pencil-alt"></i>
-	                                                    </a>
-	                                                    <a href="javascript:;" class="btn btn-simple btn-warning btn-icon like"
-	                                                       title="Publicar @{{ product.name }}"
-	                                                       data-ng-show="product.public == 0" data-ng-click="ctrl.publicProduct(product, true);">
-	                                                        <i class="ti-world"></i>
-	                                                    </a>
-	                                                    <a href="javascript:;" class="btn btn-simple btn-success btn-icon like"
-	                                                       title="Despublicar @{{ product.name }}"
-	                                                       data-ng-show="product.public == 1" data-ng-click="ctrl.publicProduct(product, false);">
-	                                                        <i class="ti-world"></i>
-	                                                    </a>
 	                                                    <a href="javascript:;" class="btn btn-simple btn-danger btn-icon like"
-	                                                       title="Eliminar @{{ product.name }}"
-	                                                       data-ng-click="ctrl.deleteProduct($index, product.id);">
+	                                                       title="Eliminar"
+	                                                       data-ng-click="ctrl.eliminarReserva(reservation.id);">
 	                                                        <i class="ti-trash"></i>
 	                                                    </a>
 	                                                </td>
@@ -168,12 +159,27 @@
     <script src="{{ asset('assets/global/plugins/bootstrap-daterangepicker/demo.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/easy-autocomplete/jquery.easy-autocomplete.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/global/plugins/angular-datatable/angular-datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/reservation/ReservationProvider.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/scripts/reservation/ReservationController.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
             initFieldsNumeric();
+
+            $(".timepicker-no-seconds").timepicker({
+                autoclose: !0,
+                minuteStep: 5,
+                defaultTime: !1
+            });
+
+            $(".date-picker").datepicker({
+                orientation: "left",
+                autoclose: true,
+                format: "dd/mm/yyyy"
+            });
         });
 
         function initFieldsNumeric() {

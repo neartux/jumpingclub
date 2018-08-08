@@ -22,7 +22,7 @@ class CreateSalesTable extends Migration {
             $table->integer('payment_type_id')->unsigned();
             $table->dateTime('created_at');
             $table->dateTime('event_date');
-            $table->time('event_time');
+            $table->string('event_time', 50);
             $table->decimal('subtotal', 8, 2);
             $table->decimal('taxes', 8, 2)->nullable();
             $table->decimal('total_discount', 8, 2)->nullable();

@@ -184,4 +184,8 @@ class ProductRepository implements ProductInterface {
     public function findProductByCodeOrDescription($re) {
         return DB::select('SELECT * FROM product WHERE status_id = '.StatusKeys::STATUS_ACTIVE.' AND (name LIKE \'%'.$re.'%\' OR description LIKE \'%'.$re.'%\')');
     }
+
+    public function findProductById($code) {
+        return DB::select('SELECT * FROM product WHERE status_id = '.StatusKeys::STATUS_ACTIVE.' AND id = '.$code);
+    }
 }

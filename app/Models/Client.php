@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\Keys\common\NumberKeys;
+use App\Utils\Keys\common\StatusKeys;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -48,5 +50,13 @@ class Client extends Model {
                     ->where('client.id', '=', $id);
             })
             ->first();
+    }
+
+    public function existClientById($clientId) {
+        $num = DB::table('client')->where([
+            ['id', '=', $clientId],
+            ['status_id', '=', StatusKeys::STATUS_ACTIVE]
+        ])->count();
+        return $num == NumberKeys::NUMBER_ONE;
     }
 }

@@ -12,4 +12,9 @@ interface SaleInterface {
 
     public function findAllSalesByDates($startDate, $endDate, $typeDate);
 
+    public function createSale($arraySale);
+
+    public function changeStatusReservation($id, $status_id);
+
+    public function deleteReserva($id);
 }

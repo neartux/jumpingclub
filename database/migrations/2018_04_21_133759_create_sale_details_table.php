@@ -20,7 +20,7 @@ class CreateSaleDetailsTable extends Migration {
             $table->decimal('quantity');
             $table->decimal('discount')->nullable();
             $table->decimal('product_price');
-            $table->boolean('apply_wholesale');
+            $table->boolean('apply_wholesale')->nullable();
 
             $table->foreign('status_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');

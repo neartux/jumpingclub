@@ -23,5 +23,6 @@ final class ApplicationKeys {
     const PAYMENT_TYPE_FULL_PAYMENT = 1;
     const PAYMENT_TYPE_PENDING_PAYMENT = 2;
     const PAYMENT_TYPE_ADVANCE_PAYMENT = 3;
+    const PORCENT_TAXES_MEXICO = 0.16;
 
 }

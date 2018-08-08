@@ -3,12 +3,17 @@
 
     app.controller('ReservationController', function($scope, $http, ReservationService, DTOptionsBuilder, DTColumnDefBuilder) {
         var ctrl = this;
-        ctrl.reservationList = ReservationService.reservationList;
+        ctrl.reservationList = {
+            data: []
+        };
         ctrl.dates = { startDate: '', endDate: '' };
         ctrl.showReservationList = true;
         ctrl.ventaCompletaTO = {};
         ctrl.clientId = undefined;
         ctrl.codeProduct = '';
+        ctrl.isProcessSaveActive = false;
+        ctrl.showClientData = false;
+        ctrl.reservationView = {};
 
         ctrl.dtInstance = {};
         ctrl.dtOptions = DTOptionsBuilder.newOptions().withDOM('C<"clear">lfrtip').withOption('aaSorting', []);
@@ -66,7 +71,12 @@
          * Metodo para buscar las reservaciones por fechas
          */
         ctrl.findReservationsByDate = function () {
-            return ReservationService.findAllReservations(ctrl.dates.startDate, ctrl.dates.endDate);
+            return ReservationService.findAllReservations(ctrl.dates.startDate, ctrl.dates.endDate).then(function (value) {
+                ctrl.reservationList.data = value.data;
+                setTimeout(function () {
+                    $scope.$apply();
+                },200);
+            });
         };
 
         /**
@@ -77,7 +87,6 @@
         ctrl.findClientById = function (idClient) {
             return ReservationService.findClientById(idClient).then(function (response) {
                 if (response.data.id !== undefined) {
-                    console.info("response.data = ", response.data);
                     ctrl.ventaCompletaTO.client = response.data;
                 }
                 ctrl.clientId = undefined;
@@ -89,14 +98,18 @@
          */
         ctrl.findProductByCode = function () {
             if (ctrl.codeProduct !== '') {
-                return PointSaleService.findProductByCode(ctrl.codeProduct).then(function (response) {
-                    conosle.info("response.data = ", response.data);
-                    if(response.data.id !== undefined) {
-                        //ctrl.addProductToSale(response.data);
+                return ReservationService.findProductByCode(ctrl.codeProduct).then(function (response) {
+                    var product = response.data[0];
+                    if (product !== undefined) {
+                        ctrl.addProductToSale(product);
                     }
-                    //ctrl.cleanAndFocusInputProduct();
                 });
             }
+        };
+
+        ctrl.addProductToSale = function (product) {
+            ctrl.ventaCompletaTO.products.push(product);
+            ctrl.calculateTotalSale();
         };
 
         /**
@@ -118,13 +131,16 @@
                 },
                 list: {
                     onSelectItemEvent: function() {
-                        ctrl.clientId = $("#clientId").getSelectedItemData().id;
                     },
                     onHideListEvent: function() {
                         $("#clientId").val('');
                     },
                     match: {
                         enabled: true
+                    },
+                    onChooseEvent: function () {
+                        ctrl.clientId = $("#clientId").getSelectedItemData().id;
+                        ctrl.findClientById(ctrl.clientId);
                     },
                     onClickEvent: function() {
                         ctrl.findClientById(ctrl.clientId);
@@ -146,7 +162,7 @@
                     return ReservationService.getContextPath() + "/admin/product/findProductsByCodeOrName";
                 },
                 getValue: function(element) {
-                    return element.code + ' - ' + element.description;
+                    return element.name + ' - ' + element.description;
                 },
                 ajaxSettings: { dataType: "json", method: "GET", data: { dataType: "json" } },
                 preparePostData: function(data) {
@@ -155,7 +171,10 @@
                 },
                 list: {
                     onSelectItemEvent: function() {
-                        ctrl.codeProduct = $("#productIdSearch").getSelectedItemData().code;
+                    },
+                    onChooseEvent: function () {
+                        ctrl.codeProduct = $("#productIdSearch").getSelectedItemData().id;
+                        ctrl.findProductByCode();
                     },
                     onHideListEvent: function() {
                         $("#productIdSearch").val('');
@@ -164,13 +183,134 @@
                         enabled: true
                     },
                     onClickEvent: function() {
-                        ctrl.findProductByCode();
                     }
                 },
                 theme: "round",
                 requestDelay: 300
             };
             $("#productIdSearch").easyAutocomplete(options);
+        };
+
+        ctrl.showCreateReservation = function () {
+            ctrl.showReservationList = false;
+            ctrl.initSale();
+        };
+
+        ctrl.removeFromSale = function (index) {
+            ctrl.ventaCompletaTO.products.splice(index, 1);
+            ctrl.calculateTotalSale();
+        };
+
+        ctrl.createSale = function () {
+            var clientId = ctrl.ventaCompletaTO.client.id;
+            if (clientId === undefined || clientId <= 0) {
+                showNotify('info', 'ti-warning', 'No se ha seleccionado cliente');
+                return;
+            }
+            var fecha = $(".date-picker").val();
+            if (fecha === undefined || $.trim(fecha).length <= 0) {
+                showNotify('info', 'ti-warning', 'La fecha es requerida');
+                return;
+            }
+            var time = $(".timepicker").val();
+            if (time === undefined || $.trim(time).length <= 0) {
+                showNotify('info', 'ti-warning', 'La hora es requerida');
+                return;
+            }
+            if(ctrl.ventaCompletaTO.products.length <= 0) {
+                showNotify('info', 'ti-warning', 'selecciona un producto');
+                return;
+            }
+            if(!ctrl.isProcessSaveActive) {
+                startLoading("Creando Venta");
+                ctrl.isProcessSaveActive = true;
+                ctrl.ventaCompletaTO.fechaEvento = fecha;
+                ctrl.ventaCompletaTO.horaEvento = time;
+                // Agrega la forma de pago estatica, esto en un futuro hay que cambiarlo, para varias formas de pago
+                return ReservationService.createSale(ctrl.ventaCompletaTO).then(function(response) {
+                    if (!response.data.error) {
+                        showNotify('success', 'ti-check', response.data.message);
+                        ctrl.showReservationList = true;
+                        ctrl.findReservationsByDate();
+                    } else {
+                        showNotify('danger', 'ti-close', response.data.message);
+                    }
+                    stopLoading();
+                    setTimeout(function () {
+                        $scope.$apply();
+                        //$(".ticket-area").printArea();
+                    },100);
+                    ctrl.isProcessSaveActive = false;
+                });
+            }
+        };
+
+        ctrl.changeAddress = function () {
+            ctrl.showClientData = true;
+            ctrl.clientView = angular.copy(ctrl.ventaCompletaTO.client);
+        };
+
+        ctrl.validateDatosEnvio = function (isValida) {
+            if(isValida) {
+                ctrl.ventaCompletaTO.client = angular.copy(ctrl.clientView);
+                ctrl.showClientData = false;
+            }
+        };
+
+        ctrl.calculateTotalSale = function () {
+            var total = 0;
+            angular.forEach(ctrl.ventaCompletaTO.products, function (item, key) {
+                total += parseFloat(item.sale_price);
+            });
+            ctrl.ventaCompletaTO.total = total.toFixed(2);
+        };
+
+        ctrl.initSale = function () {
+            ctrl.isProcessSaveActive = false;
+            ctrl.ventaCompletaTO = {
+                client: {},
+                products: [],
+                comments: ''
+            };
+            $(".date-picker").val('');
+            $(".timepicker").val('');
+        };
+
+        ctrl.changeStatuReservation = function (reservation) {
+            setTimeout(function () {
+                if(confirm("¿Estas seguro de cambiar el estatus?")){
+                    return ReservationService.changeStatusReservation(reservation.id, reservation.status_ids).then(function (value) {
+                        if (!value.data.error) {
+                            showNotify('success', 'ti-check', value.data.message);
+                            ctrl.showReservationList = true;
+                            ctrl.findReservationsByDate();
+                        } else {
+                            showNotify('danger', 'ti-close', value.data.message);
+                        }
+                    });
+                }
+            },500);
+        };
+
+        ctrl.eliminarReserva = function (id) {
+            if(confirm("¿Desea eliminar la reserva?")){
+                return ReservationService.eliminarReserva(id).then(function (value) {
+                    if (!value.data.error) {
+                        showNotify('success', 'ti-check', value.data.message);
+                        ctrl.showReservationList = true;
+                        ctrl.findReservationsByDate();
+                    } else {
+                        showNotify('danger', 'ti-close', value.data.message);
+                    }
+                });
+            }
+        };
+
+        ctrl.setStringStatus = function (reservation) {
+            reservation.status_ids = reservation.status_id.toString();
+            setTimeout(function () {
+                $scope.$apply();
+            },200);
         };
 
     });

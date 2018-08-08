@@ -166,4 +166,8 @@ class ProductController extends Controller {
             return response()->json(array("error" => true, "message" => $e->getMessage()));
         }
     }
+
+    public function findProductsById($id) {
+        return response()->json($this->product->findProductById($id));
+    }
 }

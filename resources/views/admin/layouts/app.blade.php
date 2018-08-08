@@ -35,6 +35,8 @@
     <link href='{{ asset('assets/global/css/font.css') }}' rel='stylesheet' type='text/css'>
     <link href="{{ asset('assets/global/css/themify-icons.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('assets/global/plugins/holdon/HoldOn.min.css') }}" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 
@@ -154,6 +156,8 @@
 
 <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/global/js/demo.js') }}"></script>
+
+<script src="{{ asset('assets/global/plugins/holdon/HoldOn.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/global/js/common.js') }}"></script>
 
